@@ -7,9 +7,16 @@ function App() {
       <h2>Kanban</h2>
     </header>
       <main>
-        <section className="todo-section"></section>
-        <section className="doing-section"></section>
-        <section className="done-section"></section>
+        <section className="todo-section">
+          <h3>Todo</h3>
+          <button>Add task</button>
+        </section>
+        <section className="doing-section">
+          <h3>Doing</h3>
+        </section>
+        <section className="done-section">
+          <h3>Done</h3>
+        </section>
       </main>
     </>
   );
