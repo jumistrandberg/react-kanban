@@ -11,7 +11,7 @@ const Board = () => {
       <div className="board">
         <div className="columns-output-container">
           {columns.map((col, index) => (
-            <Column key={index} column={col} />
+            <Column key={index} column={col} handleDeleteColumn={handleDeleteColumn}/>
           ))}
         </div>
         <button
@@ -38,6 +38,11 @@ const Board = () => {
       // Return the updated columns array with the new column
       return [...prevColumns, columnAdd];
     });
+  }
+
+  function handleDeleteColumn(id) {
+    const filteredColumns = columns.filter(col => col.id !== id)
+    setColumns(filteredColumns); 
   }
   
 };
