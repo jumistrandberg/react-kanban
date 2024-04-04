@@ -1,5 +1,19 @@
 import "./App.css";
+const Card = () => {
+  
+}
 
+const Column = () => {
+
+}
+
+const Board = () => {
+  return (
+    <div className="board">
+      
+    </div>
+  )
+}
 function App() {
   return (
     <>
