@@ -1,9 +1,18 @@
+header {
+  border: 1px solid blue;
+
+}
 main {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
 }
 section {
   border: 1px solid red;
-  width: 100px;
-  height: 400px;
+  height: 90vh;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 1rem;
 }
