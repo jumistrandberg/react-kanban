@@ -1,23 +1,11 @@
-import React from 'react'
-import { Droppable } from 'react-beautiful-dnd'
-import Card from './Card'
+import React from "react";
 
-const Column = ({ title, cards }) => {
+const Column = ({ column }) => {
   return (
-    <div>
-      <h3>{title}</h3>
-      <Droppable droppableId={title}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {cards.map((card, index) => (
-              <Card key={card} card={card} index={index} />
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </div>
-  )
-}
+    <>
+      <div>{column.title}</div>
+    </>
+  );
+};
 
-export default Column
+export default Column;

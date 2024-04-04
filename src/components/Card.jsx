@@ -1,21 +1,17 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-// Define Card component with props
-const Card = ({ title, index }) => {
+const Card = ({ title, id, date }) => {
   return (
-    <Draggable draggableId={title} index={index}>
-      {/* Render prop by Draggable  */}
-      {(provided) => {
-        <div
-          ref={provided.innerRef}
-          {...provided.dragHandleProps}
-          {...provided.draggableProps}
-        >
-          {title}
-        </div>;
-      }}
-    </Draggable>
+    <>
+      <div>
+        <h3>{Card.title}</h3>
+      </div>
+      <div>
+        <p>{Card.id}</p>
+        <p>{Card.date}</p>
+      </div>
+    </>
   );
 };
 
