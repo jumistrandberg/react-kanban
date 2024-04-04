@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-    <header>
+    {/* <header>
       <h2>Kanban</h2>
     </header>
       <main>
@@ -17,7 +17,7 @@ function App() {
         <section className="done-section">
           <h3>Done</h3>
         </section>
-      </main>
+      </main> */}
     </>
   );
 }
