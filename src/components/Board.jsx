@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
+import { DragDropContext } from "react-beautiful-dnd";
 
 const Board = () => {
   const [columns, setColumns] = useState([]);
@@ -8,28 +9,34 @@ const Board = () => {
 
   return (
     <>
-      <div className="board">
-        <div className="columns-output-container">
-          {columns.map((col, index) => (
-            <Column key={index} column={col} handleDeleteColumn={handleDeleteColumn}/>
-          ))}
+      <DragDropContext>
+        <div className="board">
+          <div className="columns-output-container">
+            {columns.map((col, index) => (
+              <Column
+                key={index}
+                column={col}
+                handleDeleteColumn={handleDeleteColumn}
+              />
+            ))}
+          </div>
+          <button
+            className="new-col-btn"
+            onClick={() => {
+              handleCreateColumn();
+            }}
+            aria-label="Add new column"
+          >
+            <span>New column</span>
+            <IoIosAddCircle />
+          </button>
         </div>
-        <button
-          className="new-col-btn"
-          onClick={() => {
-            handleCreateColumn();
-          }}
-          aria-label="Add new column"
-        >
-          <span>New column</span>
-          <IoIosAddCircle />
-        </button>
-      </div>
+      </DragDropContext>
     </>
   );
 
   function handleCreateColumn() {
-    setColumns(prevColumns => {
+    setColumns((prevColumns) => {
       // Column to add
       const columnAdd = {
         id: prevColumns.length + 1,
@@ -41,10 +48,9 @@ const Board = () => {
   }
 
   function handleDeleteColumn(id) {
-    const filteredColumns = columns.filter(col => col.id !== id)
-    setColumns(filteredColumns); 
+    const filteredColumns = columns.filter((col) => col.id !== id);
+    setColumns(filteredColumns);
   }
-  
 };
 
 export default Board;
