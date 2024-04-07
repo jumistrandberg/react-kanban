@@ -18,17 +18,7 @@ const Board = () => {
     })
   }
 
-  // function handleCreateColumn() {
-  //   setColumns((prevColumns) => {
-  //     // Column to add
-  //     const columnAdd = {
-  //       id: prevColumns.length + 1,
-  //       title: `Column ${prevColumns.length + 1}`,
-  //     };
-  //     // Return the updated columns array with the new column
-  //     return [...prevColumns, columnAdd];
-  //   });
-  // }
+  
   return (
     <>
       <DragDropContext>
