@@ -4,9 +4,11 @@ import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
 
 const Board = () => {
+  // Use States
   const [columns, setColumns] = useState([]);
   console.log(columns);
 
+  // Functional components 
   const handleCreateColumn = () => {
     setColumns((prevColumns) => {
       const columnAdd = {
@@ -15,10 +17,15 @@ const Board = () => {
         cards: []
       };
       return [...prevColumns, columnAdd];
-    })
+    });
+  };
+
+  const handleDeleteColumn = (id) => {
+    const filteredColumns = columns.filter((col) => col.id !== id);
+    setColumns(filteredColumns);
   }
 
-  
+
   return (
     <>
       <DragDropContext>
@@ -49,10 +56,6 @@ const Board = () => {
 
   
 
-  function handleDeleteColumn(id) {
-    const filteredColumns = columns.filter((col) => col.id !== id);
-    setColumns(filteredColumns);
-  }
 };
 
 export default Board;
