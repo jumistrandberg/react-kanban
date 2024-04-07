@@ -7,6 +7,28 @@ const Board = () => {
   const [columns, setColumns] = useState([]);
   console.log(columns);
 
+  const handleCreateColumn = () => {
+    setColumns((prevColumns) => {
+      const columnAdd = {
+        id: prevColumns.length + 1, 
+        title: `Column ${prevColumns.length + 1}`, 
+        cards: []
+      };
+      return [...prevColumns, columnAdd];
+    })
+  }
+
+  // function handleCreateColumn() {
+  //   setColumns((prevColumns) => {
+  //     // Column to add
+  //     const columnAdd = {
+  //       id: prevColumns.length + 1,
+  //       title: `Column ${prevColumns.length + 1}`,
+  //     };
+  //     // Return the updated columns array with the new column
+  //     return [...prevColumns, columnAdd];
+  //   });
+  // }
   return (
     <>
       <DragDropContext>
@@ -35,17 +57,7 @@ const Board = () => {
     </>
   );
 
-  function handleCreateColumn() {
-    setColumns((prevColumns) => {
-      // Column to add
-      const columnAdd = {
-        id: prevColumns.length + 1,
-        title: `Column ${prevColumns.length + 1}`,
-      };
-      // Return the updated columns array with the new column
-      return [...prevColumns, columnAdd];
-    });
-  }
+  
 
   function handleDeleteColumn(id) {
     const filteredColumns = columns.filter((col) => col.id !== id);
