@@ -25,6 +25,25 @@ const Board = () => {
     setColumns(filteredColumns);
   }
 
+  const handleCreateCard = (columnId) => {
+    setColumns((prevColumns) => {
+      const newCard = {
+        id: prevColumns[columnId - 1].card.length + 1,
+        title: "card", 
+        date: new Date().toISOString
+      };
+      const updatedColumns = prevColumns.map((col) => {
+        if (col.id === columnId) {
+          return {
+            ...col, 
+            cards: [...col.tasks, newCard]
+          };
+        }
+        return col;
+      });
+      return updatedColumns;
+    });
+  };
 
   return (
     <>

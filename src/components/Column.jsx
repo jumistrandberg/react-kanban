@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { IoMdTrash } from "react-icons/io";
 import { Droppable } from "react-beautiful-dnd";
 import { useSearchParams } from "react-router-dom";
+import Card from "./Card";
 
-const Column = ({ column, handleDeleteColumn }) => {
+const Column = ({ column, handleDeleteColumn, handleCreateCard }) => {
   const [editColName, setEditColName] = useState(false);
 
   return (
