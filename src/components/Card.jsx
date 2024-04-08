@@ -1,17 +1,17 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 
-const Card = ({ title, id, date }) => {
+const Card = ({ card, handleCardOpen }) => {
   return (
-    <>
+    <div onClick={() => handleCreateCard(card)}>
       <div>
-        <h3>{Card.title}</h3>
+        <h3>{card.title}</h3>
       </div>
       <div>
-        <p>{Card.id}</p>
-        <p>{Card.date}</p>
+        <p>{card.id}</p>
+        <p>{card.date}</p>
       </div>
-    </>
+    </div>
   );
 };
 

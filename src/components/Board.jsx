@@ -45,6 +45,10 @@ const Board = () => {
     });
   };
 
+  const handleCardOpen = (card) => {
+    
+  }
+
   return (
     <>
       <DragDropContext>
