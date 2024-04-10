@@ -4,7 +4,7 @@ import { Droppable } from "react-beautiful-dnd";
 import { useSearchParams } from "react-router-dom";
 import Card from "./Card";
 
-const Column = ({ column, handleDeleteColumn, handleCreateCard }) => {
+const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }) => {
   const [editColName, setEditColName] = useState(false);
 
   return (
@@ -50,7 +50,13 @@ const Column = ({ column, handleDeleteColumn, handleCreateCard }) => {
               {...provided.droppableProps}
               isDraggingOver={snapshot.isDraggingOver}
             >
-              Content
+              {column.cards.map((card, index) => (
+                <Card
+                key={index}
+                card={card}
+                handleCardOpen={(handleCardOpen)}
+                /> 
+              ))}
               {provided.placeholder}
             </div>
           )}

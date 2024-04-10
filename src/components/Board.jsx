@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
-import Column from "./Column";
 import { DragDropContext } from "react-beautiful-dnd";
+
+import Column from "./Column";
+import Modal from "./Modal";
 
 const Board = () => {
   // Use States
   const [columns, setColumns] = useState([]);
-  console.log(columns);
+  const [selectedCard, setSelectedCard] = useState(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   // Functional components 
   const handleCreateColumn = () => {
@@ -28,7 +31,7 @@ const Board = () => {
   const handleCreateCard = (columnId) => {
     setColumns((prevColumns) => {
       const newCard = {
-        id: prevColumns[columnId - 1].card.length + 1,
+        id: prevColumns[columnId - 1].cards.length + 1,
         title: "card", 
         date: new Date().toISOString
       };
@@ -36,7 +39,7 @@ const Board = () => {
         if (col.id === columnId) {
           return {
             ...col, 
-            cards: [...col.tasks, newCard]
+            cards: [...col.cards, newCard]
           };
         }
         return col;
@@ -46,7 +49,12 @@ const Board = () => {
   };
 
   const handleCardOpen = (card) => {
-    
+    setSelectedCard(card);
+    setIsModalOpen(true); 
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false); 
   }
 
   return (
@@ -59,6 +67,8 @@ const Board = () => {
                 key={index}
                 column={col}
                 handleDeleteColumn={handleDeleteColumn}
+                handleCreateCard={handleCreateCard}
+                handleCardOpen={handleCardOpen}
               />
             ))}
           </div>
@@ -73,6 +83,7 @@ const Board = () => {
             <IoIosAddCircle />
           </button>
         </div>
+        {isModalOpen && <Modal task={selectedCard} closeModal={closeModal} />} 
       </DragDropContext>
     </>
   );
