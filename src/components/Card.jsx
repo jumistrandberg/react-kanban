@@ -3,7 +3,7 @@ import { Draggable } from "react-beautiful-dnd";
 
 const Card = ({ card, handleCardOpen }) => {
   return (
-    <div onClick={() => handleCreateCard(card)}>
+    <div onClick={() => handleCardOpen(card)}>
       <div>
         <h3>{card.title}</h3>
       </div>
