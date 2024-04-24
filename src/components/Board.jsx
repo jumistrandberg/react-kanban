@@ -55,14 +55,60 @@ const Board = () => {
     setIsModalOpen(false);
   };
 
+  return (
+    <div
+      className="
+    m-auto
+    flex
+    min-h-screen
+    w-full
+    items-center
+    overflow-x-auto
+    overflow-y-hidden
+    px-[40px]"
+    >
+      <div className="m-auto flex gap-4">
+        <div className="flex gap-4">
+          {columns.map((col) => (
+            <Column column={col} />
+          ))}
+        </div>
+        <button
+          onClick={() => {
+            handleCreateColumn();
+          }}
+          aria-label="Add new column"
+          className="
+        h-[60px]
+        w-[350px]
+        min-w-[350px]
+        cursor-pointer
+        rounded-lg
+        bg-mainBackgroundColor
+        border-2
+        border-columnBackgroundColor
+        p-4
+        ring-purple-900
+        hover:ring-2
+        flex
+        gap-2
+        "
+        >
+          <IoIosAddCircle />
+          Add Column
+        </button>
+      </div>
+    </div>
+  );
+};
 //   return (
 //     <>
 //       <div className="
-//       flex 
-//       m-auto 
-//       min-h-screen 
-//       w-full 
-//       items-center 
+//       flex
+//       m-auto
+//       min-h-screen
+//       w-full
+//       items-center
 //       px-[40]
 //       overflow-x-auto
 //       overflow-y-hidden"
