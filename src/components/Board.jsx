@@ -17,7 +17,7 @@ const Board = () => {
   const handleCreateColumn = () => {
     setColumns((prevColumns) => {
       const columnAdd = {
-        id: prevColumns.length + 1,
+        id: generateColId(),
         title: `Column ${prevColumns.length + 1}`,
         cards: [],
       };
@@ -25,9 +25,16 @@ const Board = () => {
     });
   };
 
+  const generateColId = () => {
+    return Math.floor(Math.random() * 3000); 
+  }
+
+
   const handleDeleteColumn = (id) => {
-    const filteredColumns = columns.filter((col) => col.id !== id);
-    setColumns(filteredColumns);
+    setColumns((prevColumns) => {
+      const filteredCols = prevColumns.filter((col) => col.id !== id);
+      return filteredCols;
+    })
   };
 
   const handleCreateCard = (columnId) => {
@@ -140,7 +147,7 @@ const Board = () => {
         {createPortal(
           <DragOverlay>
             {dragColumn && (
-              <Column column={dragColumn} deleteColumn={handleDeleteColumn} />
+              <Column column={dragColumn} handleDeleteColumn={handleDeleteColumn} />
             )}
           </DragOverlay>,
           document.body

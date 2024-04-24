@@ -104,6 +104,7 @@ const Column = ({
             aria-label="trash icon"
             onClick={() => {
               handleDeleteColumn(column.id);
+              console.log(column.id)
             }}
             className="
             hover:stroke-white
