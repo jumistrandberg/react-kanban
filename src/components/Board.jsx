@@ -70,7 +70,7 @@ const Board = () => {
       <div className="m-auto flex gap-4">
         <div className="flex gap-4">
           {columns.map((col) => (
-            <Column column={col} />
+            <Column column={col} handleDeleteColumn={handleDeleteColumn}/>
           ))}
         </div>
         <button
