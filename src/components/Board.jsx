@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
 import { DndContext } from "@dnd-kit/core";

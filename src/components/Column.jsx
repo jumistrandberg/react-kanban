@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { IoMdTrash } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import Card from "./Card";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 const Column = ({
   column,
@@ -10,9 +12,24 @@ const Column = ({
   handleCardOpen,
 }) => {
   const [editColName, setEditColName] = useState(false);
+  const { setNodeRef, attributes, listeners, transform, transition } =
+    useSortable({
+      id: column.id,
+      data: {
+        type: "Column",
+        column,
+      },
+    });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
   return (
     <div
+      ref={setNodeRef}
+      style={style}
       className="
     bg-columnBackgroundColor
     w-[350px]
@@ -26,6 +43,8 @@ const Column = ({
       <div className="column">
         {/* Column Title  */}
         <div
+          {...attributes}
+          {...listeners}
           className="
         bg-mainBackgroundColor
         text-md
