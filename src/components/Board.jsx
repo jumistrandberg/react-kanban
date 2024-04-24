@@ -54,7 +54,7 @@ const Board = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  console.log(columns)
   return (
     <div
       className="
@@ -70,7 +70,7 @@ const Board = () => {
       <div className="m-auto flex gap-4">
         <div className="flex gap-4">
           {columns.map((col) => (
-            <Column column={col} handleDeleteColumn={handleDeleteColumn}/>
+            <Column key={col.id} column={col} handleDeleteColumn={handleDeleteColumn}/>
           ))}
         </div>
         <button
