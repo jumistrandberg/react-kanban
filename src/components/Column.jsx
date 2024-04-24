@@ -3,27 +3,81 @@ import { IoMdTrash } from "react-icons/io";
 import { useSearchParams } from "react-router-dom";
 import Card from "./Card";
 
-const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }) => {
+const Column = ({
+  column,
+  handleDeleteColumn,
+  handleCreateCard,
+  handleCardOpen,
+}) => {
   const [editColName, setEditColName] = useState(false);
 
   return (
-    <div className="
-    bg-mainBackgroundColor
-    w-[400px]
+    <div
+      className="
+    bg-columnBackgroundColor
+    w-[350px]
     h-[500px]
     max-h-[500px]
     rounded-md
     flex
     flex-col
-    ">
+    "
+    >
       <div className="column">
+        {/* Column Title  */}
         <div
+          className="
+        bg-mainBackgroundColor
+        text-md
+        cursor-grab
+        rounded-md
+        p-3
+        font-bold
+        border-columnBackgroundColor
+        border-3
+        flex
+        items-center
+        justify-between"
+        >
+          <div className="flex gap-2">
+            <div
+              className="
+            bg-columnBackgroundColor 
+            flex 
+            justify-center 
+            items-center 
+            px-2 
+            py-1 
+            rounded-full"
+            >
+              placeholder
+            </div>
+            {column.title}
+          </div>
+          <button
+            aria-label="trash icon"
+            onClick={() => {
+              handleDeleteColumn(column.id);
+            }}
+            className="
+            hover:stroke-white
+            hover:bg-columnBackgroundColor
+            rounded
+            px-1
+            py-2"
+          >
+            <IoMdTrash />
+          </button>
+        </div>
+        {/* Card container  */}
+        <div className="flex flex-grow">Cards</div>
+        {/* <div
           className="col-top-part"
           onClick={() => {
             setEditColName(true);
           }}
         >
-          {/* <div>
+          <div>
             {!editColName && column.title}{" "}
             {editColName && (
               <input
@@ -38,19 +92,10 @@ const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }
                 }}
               />
             )}
+          </div>
           </div> */}
 
-          <button
-            aria-label="trash icon"
-            onClick={() => {
-              handleDeleteColumn(column.id);
-            }}
-          >
-            <IoMdTrash />
-          </button>
-        </div>
-      
-        <button onClick={() => handleCreateCard(column.id)}>New task</button>
+        {/* <button onClick={() => handleCreateCard(column.id)}>New task</button> */}
       </div>
     </div>
   );

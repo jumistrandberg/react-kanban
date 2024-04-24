@@ -5,5 +5,5 @@
 html,
 body,
 #root {
-  @apply bg-mainBackgroundColor text-mainTextColor box-border;
+  @apply bg-gray-950 text-gray-50 box-border;
 }
