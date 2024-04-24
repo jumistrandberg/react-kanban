@@ -11,6 +11,8 @@ const Column = ({
   handleCreateCard,
   handleCardOpen,
   updateColumn,
+  card
+
 }) => {
   const [editColName, setEditColName] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
@@ -149,32 +151,23 @@ const Column = ({
           </button>
         </div>
         {/* Card container  */}
-        <div className="flex flex-grow">Cards</div>
-        {/* <div
-          className="col-top-part"
-          onClick={() => {
-            setEditColName(true);
-          }}
+        <div className="flex flex-grow">bajs</div>
+        <button
+        onClick={() => {
+          handleCreateCard(column.id)
+        }}
+          className="
+          flex 
+          gap-2 
+          items-center 
+          border-columnBackgroundColor 
+          border-2 
+          rounded-md 
+          p-4             
+          hover:bg-mainBackgroundColor"
         >
-          <div>
-            {!editColName && column.title}{" "}
-            {editColName && (
-              <input
-                value={column.title}
-                onChange={(e) => updateColumn(column.id, e.target.value)}
-                onBlur={() => {
-                  setEditColName(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key !== "Enter") return;
-                  setEditColName(false);
-                }}
-              />
-            )}
-          </div>
-          </div> */}
-
-        {/* <button onClick={() => handleCreateCard(column.id)}>New task</button> */}
+          Add Task
+        </button>
       </div>
     </div>
   );

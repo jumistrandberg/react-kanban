@@ -14,6 +14,7 @@ import { createPortal } from "react-dom";
 const Board = () => {
   // Use States
   const [columns, setColumns] = useState([]);
+  const [cards, setCards] = useState([]);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,18 +47,24 @@ const Board = () => {
     const newCols = columns.map(col =>
       col.id !== id ? col : { ...col, title }
     );
-    
+
     setColumns(newCols);
   };
   
 
   const handleCreateCard = (columnId) => {
     setColumns((prevColumns) => {
+      const column = prevColumns.find((col) => col.id === columnId);
+  
+      if (!column) return prevColumns;
+  
       const newCard = {
-        id: prevColumns[columnId - 1].cards.length + 1,
-        title: "card",
-        date: new Date().toISOString,
+        id: column.cards.length + 1,
+        columnId,
+        title: `Task ${column.cards.length + 1}`,
+        date: new Date().toISOString(), 
       };
+  
       const updatedColumns = prevColumns.map((col) => {
         if (col.id === columnId) {
           return {
@@ -70,6 +77,7 @@ const Board = () => {
       return updatedColumns;
     });
   };
+  
 
   const handleCardOpen = (card) => {
     setSelectedCard(card);
@@ -136,6 +144,8 @@ const Board = () => {
                   column={col}
                   handleDeleteColumn={handleDeleteColumn}
                   updateColumn={updateColumn}
+                  handleCreateCard={handleCreateCard}
+                  card={cards.filter(card => card.columnId === col.id)}
                 />
               ))}
             </SortableContext>
@@ -172,6 +182,8 @@ const Board = () => {
               <Column
                 column={dragColumn}
                 handleDeleteColumn={handleDeleteColumn}
+                updateColumn={updateColumn}
+                handleCreateCard={handleCreateCard}
               />
             )}
           </DragOverlay>,
