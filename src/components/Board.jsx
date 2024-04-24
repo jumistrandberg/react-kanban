@@ -1,7 +1,13 @@
 import { useState, useMemo } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
-import { DndContext, DragOverlay } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 
@@ -26,15 +32,14 @@ const Board = () => {
   };
 
   const generateColId = () => {
-    return Math.floor(Math.random() * 3000); 
-  }
-
+    return Math.floor(Math.random() * 3000);
+  };
 
   const handleDeleteColumn = (id) => {
     setColumns((prevColumns) => {
       const filteredCols = prevColumns.filter((col) => col.id !== id);
       return filteredCols;
-    })
+    });
   };
 
   const handleCreateCard = (columnId) => {
@@ -88,11 +93,18 @@ const Board = () => {
 
       const overColIndex = columns.findIndex((col) => col.id === overColId);
 
-      // Swapp 
-      return arrayMove(columns, activeColIndex, overColIndex); 
+      // Swapp
+      return arrayMove(columns, activeColIndex, overColIndex);
     });
   };
-  console.log(columns);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 300,
+      },
+    })
+  );
   return (
     <div
       className="
@@ -105,7 +117,7 @@ const Board = () => {
     overflow-y-hidden
     px-[40px]"
     >
-      <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+      <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd} sensors={sensors}>
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
@@ -147,7 +159,10 @@ const Board = () => {
         {createPortal(
           <DragOverlay>
             {dragColumn && (
-              <Column column={dragColumn} handleDeleteColumn={handleDeleteColumn} />
+              <Column
+                column={dragColumn}
+                handleDeleteColumn={handleDeleteColumn}
+              />
             )}
           </DragOverlay>,
           document.body
