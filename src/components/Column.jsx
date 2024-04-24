@@ -7,7 +7,15 @@ const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }
   const [editColName, setEditColName] = useState(false);
 
   return (
-    <>
+    <div className="
+    bg-mainBackgroundColor
+    w-[400px]
+    h-[500px]
+    max-h-[500px]
+    rounded-md
+    flex
+    flex-col
+    ">
       <div className="column">
         <div
           className="col-top-part"
@@ -15,7 +23,7 @@ const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }
             setEditColName(true);
           }}
         >
-          <div>
+          {/* <div>
             {!editColName && column.title}{" "}
             {editColName && (
               <input
@@ -30,7 +38,7 @@ const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }
                 }}
               />
             )}
-          </div>
+          </div> */}
 
           <button
             aria-label="trash icon"
@@ -44,7 +52,7 @@ const Column = ({ column, handleDeleteColumn, handleCreateCard, handleCardOpen }
       
         <button onClick={() => handleCreateCard(column.id)}>New task</button>
       </div>
-    </>
+    </div>
   );
 };
 
