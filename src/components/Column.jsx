@@ -45,7 +45,7 @@ const Column = ({
       setEditColName(false);
     }
   };
-  
+
   const handleBlur = () => {
     updateColumn(column.id, colTitle);
     setEditColName(false);
@@ -118,7 +118,7 @@ const Column = ({
             py-1 
             rounded-full"
             >
-              placeholder
+              0
             </div>
             {!editColName && column.title}
             {editColName && (
@@ -128,7 +128,7 @@ const Column = ({
                 onKeyDown={handleKeyDown}
                 autoFocus
                 onBlur={handleBlur}
-                className="bg-mainBackgroundColor focus:border-purple-200 border-2 border-rounded outline-none px-2 "
+                className="bg-mainBackgroundColor focus:border-purple-200 border-2 outline-none px-2 rounded-md"
               />
             )}
           </div>
