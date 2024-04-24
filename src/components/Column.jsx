@@ -11,8 +11,7 @@ const Column = ({
   handleCreateCard,
   handleCardOpen,
   updateColumn,
-  card
-
+  cards,
 }) => {
   const [editColName, setEditColName] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
@@ -151,24 +150,35 @@ const Column = ({
           </button>
         </div>
         {/* Card container  */}
-        <div className="flex flex-grow">bajs</div>
-        <button
-        onClick={() => {
-          handleCreateCard(column.id)
-        }}
+        <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+          {cards.map((card) => (
+              <Card
+              key={card.id}
+              card={card}
+              // handleDeleteCard={handleDeleteCard}
+              // updateCard={updateCard}
+            />
+          ))}
+        </div>
+      
+      </div>
+      <button
+          onClick={() => {
+            handleCreateCard(column.id);
+          }}
           className="
+          hover:bg-mainBackgroundColor
+          hover:border-mainBackgroundColor
           flex 
           gap-2 
           items-center 
           border-columnBackgroundColor 
           border-2 
           rounded-md 
-          p-4             
-          hover:bg-mainBackgroundColor"
+          p-4"
         >
           Add Task
         </button>
-      </div>
     </div>
   );
 };

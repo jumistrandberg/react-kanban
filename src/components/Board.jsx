@@ -44,40 +44,30 @@ const Board = () => {
   };
 
   const updateColumn = (id, title) => {
-    const newCols = columns.map(col =>
+    const newCols = columns.map((col) =>
       col.id !== id ? col : { ...col, title }
     );
 
     setColumns(newCols);
   };
-  
 
   const handleCreateCard = (columnId) => {
-    setColumns((prevColumns) => {
-      const column = prevColumns.find((col) => col.id === columnId);
-  
-      if (!column) return prevColumns;
-  
-      const newCard = {
-        id: column.cards.length + 1,
-        columnId,
-        title: `Task ${column.cards.length + 1}`,
-        date: new Date().toISOString(), 
-      };
-  
-      const updatedColumns = prevColumns.map((col) => {
-        if (col.id === columnId) {
-          return {
-            ...col,
-            cards: [...col.cards, newCard],
-          };
-        }
-        return col;
-      });
-      return updatedColumns;
-    });
+
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 because January is 0
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+
+    const newCard = {
+      id: cards.length + 1,
+      columnId,
+      title: `Task ${cards.length + 1}`,
+      date: formattedDate,
+    };
+
+    setCards([...cards, newCard]);
   };
-  
 
   const handleCardOpen = (card) => {
     setSelectedCard(card);
@@ -134,7 +124,11 @@ const Board = () => {
     overflow-y-hidden
     px-[40px]"
     >
-      <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd} sensors={sensors}>
+      <DndContext
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        sensors={sensors}
+      >
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
@@ -145,7 +139,7 @@ const Board = () => {
                   handleDeleteColumn={handleDeleteColumn}
                   updateColumn={updateColumn}
                   handleCreateCard={handleCreateCard}
-                  card={cards.filter(card => card.columnId === col.id)}
+                  cards={cards.filter((card) => card.columnId === col.id)}
                 />
               ))}
             </SortableContext>
@@ -193,46 +187,5 @@ const Board = () => {
     </div>
   );
 };
-//   return (
-//     <>
-//       <div className="
-//       flex
-//       m-auto
-//       min-h-screen
-//       w-full
-//       items-center
-//       px-[40]
-//       overflow-x-auto
-//       overflow-y-hidden"
-//       >
-//         <div className="grid grid-cols-3 gap-4">
-//           {columns.map((col, index) => (
-//             <Column
-//               key={index}
-//               column={col}
-//               handleDeleteColumn={handleDeleteColumn}
-//               handleCreateCard={handleCreateCard}
-//               handleCardOpen={handleCardOpen}
-//             />
-//           ))}
-//         </div>
-//         <button
-//           className="
-//             flex items-center justify-center h-12 w-32 border border-gray-300 rounded-lg
-//             hover:bg-gray-100 hover:border-gray-400 focus:outline-none
-//           "
-//           onClick={() => {
-//             handleCreateColumn();
-//           }}
-//           aria-label="Add new column"
-//         >
-//           <span>New column</span>
-//           <IoIosAddCircle className="ml-2" />
-//         </button>
-//       </div>
-//       {isModalOpen && <Modal task={selectedCard} closeModal={closeModal} />}
-//     </>
-//   );
-// };
 
 export default Board;
