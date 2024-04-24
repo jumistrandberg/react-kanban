@@ -57,6 +57,7 @@ const Board = () => {
 
   return (
     <>
+    <div className="bg-mainBackgroundColor text-mainTextColor">Tailwind?</div>
       <div className="flex m-auto min-h-screen w-full items-center px-10">
         <div className="grid grid-cols-3 gap-4">
           {columns.map((col, index) => (
