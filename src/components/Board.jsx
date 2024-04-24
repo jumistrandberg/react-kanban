@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosAddCircle } from "react-icons/io";
-
 import Column from "./Column";
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext } from "@dnd-kit/sortable";
 
 const Board = () => {
   // Use States
   const [columns, setColumns] = useState([]);
+  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]); 
   const [selectedCard, setSelectedCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,11 +69,14 @@ const Board = () => {
     overflow-y-hidden
     px-[40px]"
     >
+      <DndContext>
       <div className="m-auto flex gap-4">
         <div className="flex gap-4">
+          <SortableContext items={columnsId}>
           {columns.map((col) => (
             <Column key={col.id} column={col} handleDeleteColumn={handleDeleteColumn}/>
           ))}
+          </SortableContext>
         </div>
         <button
           onClick={() => {
@@ -98,6 +103,7 @@ const Board = () => {
           Add Column
         </button>
       </div>
+      </DndContext>
     </div>
   );
 };
