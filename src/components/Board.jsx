@@ -1,15 +1,17 @@
 import { useState, useMemo } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { SortableContext } from "@dnd-kit/sortable";
+import { createPortal } from "react-dom";
 
 const Board = () => {
   // Use States
   const [columns, setColumns] = useState([]);
-  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]); 
+  const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   const [selectedCard, setSelectedCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dragColumn, setDragColumn] = useState(null);
 
   // Functional components
   const handleCreateColumn = () => {
@@ -56,7 +58,14 @@ const Board = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  console.log(columns)
+
+  const onDragStart = (e) => {
+    if (e.active.data.current.type === "Column") {
+      setDragColumn(e.active.data.current.column);
+      return;
+    }
+  };
+  console.log(columns);
   return (
     <div
       className="
@@ -69,21 +78,25 @@ const Board = () => {
     overflow-y-hidden
     px-[40px]"
     >
-      <DndContext>
-      <div className="m-auto flex gap-4">
-        <div className="flex gap-4">
-          <SortableContext items={columnsId}>
-          {columns.map((col) => (
-            <Column key={col.id} column={col} handleDeleteColumn={handleDeleteColumn}/>
-          ))}
-          </SortableContext>
-        </div>
-        <button
-          onClick={() => {
-            handleCreateColumn();
-          }}
-          aria-label="Add new column"
-          className="
+      <DndContext onDragStart={onDragStart}>
+        <div className="m-auto flex gap-4">
+          <div className="flex gap-4">
+            <SortableContext items={columnsId}>
+              {columns.map((col) => (
+                <Column
+                  key={col.id}
+                  column={col}
+                  handleDeleteColumn={handleDeleteColumn}
+                />
+              ))}
+            </SortableContext>
+          </div>
+          <button
+            onClick={() => {
+              handleCreateColumn();
+            }}
+            aria-label="Add new column"
+            className="
         h-[60px]
         w-[350px]
         min-w-[350px]
@@ -98,11 +111,20 @@ const Board = () => {
         flex
         gap-2
         "
-        >
-          <IoIosAddCircle />
-          Add Column
-        </button>
-      </div>
+          >
+            <IoIosAddCircle />
+            Add Column
+          </button>
+        </div>
+
+        {createPortal(
+          <DragOverlay>
+            {dragColumn && (
+              <Column column={dragColumn} deleteColumn={handleDeleteColumn} />
+            )}
+          </DragOverlay>,
+          document.body
+        )}
       </DndContext>
     </div>
   );
