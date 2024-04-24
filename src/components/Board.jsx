@@ -59,7 +59,6 @@ const Board = () => {
 
   return (
     <>
-      <DragDropContext>
         <div className="board">
           <div className="columns-output-container">
             {columns.map((col, index) => (
@@ -84,7 +83,6 @@ const Board = () => {
           </button>
         </div>
         {isModalOpen && <Modal task={selectedCard} closeModal={closeModal} />} 
-      </DragDropContext>
     </>
   );
 
