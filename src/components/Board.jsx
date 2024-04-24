@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
-import { SortableContext } from "@dnd-kit/sortable";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 
 const Board = () => {
@@ -65,6 +65,26 @@ const Board = () => {
       return;
     }
   };
+
+  const onDragEnd = (e) => {
+    const { active, over } = e;
+
+    if (!over) return;
+
+    const dragColId = active.id;
+    const overColId = over.id;
+
+    if (dragColId === overColId) return;
+
+    setColumns((columns) => {
+      const activeColIndex = columns.findIndex((col) => col.id === dragColId);
+
+      const overColIndex = columns.findIndex((col) => col.id === overColId);
+
+      // Swapp 
+      return arrayMove(columns, activeColIndex, overColIndex); 
+    });
+  };
   console.log(columns);
   return (
     <div
@@ -78,7 +98,7 @@ const Board = () => {
     overflow-y-hidden
     px-[40px]"
     >
-      <DndContext onDragStart={onDragStart}>
+      <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
             <SortableContext items={columnsId}>
