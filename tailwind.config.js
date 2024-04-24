@@ -9,7 +9,8 @@ export default {
       colors: {
         "mainBackgroundColor": '#352F44',
         "columnBackgroundColor": '#5C5470',
-        "mainTextColor": '#FAF0E6'
+        "mainTextColor": '#FAF0E6',
+        "customBg": '#EFE1D1'
       }
     },
   },
