@@ -42,6 +42,15 @@ const Board = () => {
     });
   };
 
+  const updateColumn = (id, title) => {
+    const newCols = columns.map(col =>
+      col.id !== id ? col : { ...col, title }
+    );
+    
+    setColumns(newCols);
+  };
+  
+
   const handleCreateCard = (columnId) => {
     setColumns((prevColumns) => {
       const newCard = {
@@ -101,7 +110,7 @@ const Board = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 300,
+        distance: 3,
       },
     })
   );
@@ -126,6 +135,7 @@ const Board = () => {
                   key={col.id}
                   column={col}
                   handleDeleteColumn={handleDeleteColumn}
+                  updateColumn={updateColumn}
                 />
               ))}
             </SortableContext>

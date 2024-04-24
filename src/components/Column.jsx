@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoMdTrash } from "react-icons/io";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import Card from "./Card";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -10,8 +10,11 @@ const Column = ({
   handleDeleteColumn,
   handleCreateCard,
   handleCardOpen,
+  updateColumn,
 }) => {
   const [editColName, setEditColName] = useState(false);
+  const [colTitle, setColTitle] = useState(column.title);
+
   const {
     setNodeRef,
     attributes,
@@ -30,6 +33,22 @@ const Column = ({
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
+  };
+
+  const handleColInputChange = (e) => {
+    setColTitle(e.target.value);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      updateColumn(column.id, colTitle);
+      setEditColName(false);
+    }
+  };
+  
+  const handleBlur = () => {
+    updateColumn(column.id, colTitle);
+    setEditColName(false);
   };
 
   if (isDragging) {
@@ -72,6 +91,9 @@ const Column = ({
         <div
           {...attributes}
           {...listeners}
+          onClick={() => {
+            setEditColName(true);
+          }}
           className="
         bg-mainBackgroundColor
         text-md
@@ -98,13 +120,23 @@ const Column = ({
             >
               placeholder
             </div>
-            {column.title}
+            {!editColName && column.title}
+            {editColName && (
+              <input
+                value={colTitle}
+                onChange={handleColInputChange}
+                onKeyDown={handleKeyDown}
+                autoFocus
+                onBlur={handleBlur}
+                className="bg-mainBackgroundColor focus:border-purple-200 border-2 border-rounded outline-none px-2 "
+              />
+            )}
           </div>
           <button
             aria-label="trash icon"
             onClick={() => {
               handleDeleteColumn(column.id);
-              console.log(column.id)
+              console.log(column.id);
             }}
             className="
             hover:stroke-white
