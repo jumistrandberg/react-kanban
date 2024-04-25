@@ -16,7 +16,7 @@ const Card = ({ card, handleDeleteCard }) => {
   } = useSortable({
     id: card.id,
     data: {
-      type: "card",
+      type: "Card",
       card,
     },
   });
@@ -79,7 +79,6 @@ const Card = ({ card, handleDeleteCard }) => {
       "
       >
         <div className="flex flex-row items-center gap-6">
-          <h3 className="font-bold">{card.title}</h3>
           <p className="text-xs">{card.date}</p>
         </div>
         <div className="flex w-[100%]">

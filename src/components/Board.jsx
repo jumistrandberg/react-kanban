@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
+import Card from "./Card";
 import {
   DndContext,
   DragOverlay,
@@ -20,8 +21,6 @@ const Board = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragColumn, setDragColumn] = useState(null);
   const [dragCard, setDragCard] = useState(null);
-
-
 
   // Functional components
   const handleCreateColumn = () => {
@@ -106,6 +105,8 @@ const Board = () => {
   };
 
   const onDragEnd = (e) => {
+    setDragColumn(null);
+    setDragCard(null);
     const { active, over } = e;
 
     if (!over) return;
@@ -123,6 +124,48 @@ const Board = () => {
       // Swapp
       return arrayMove(columns, activeColIndex, overColIndex);
     });
+  };
+
+  const onDragOver = (e) => {
+    const { active, over } = e;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const isDragCard = active.data.current.type === "Card";
+    const isOverCard = over.data.current.type === "Card";
+
+    // Over another card
+    if (isDragCard && isOverCard) {
+      setCards((cards) => {
+        const activeIndex = cards.findIndex((c) => c.id === activeId);
+        const overIndex = cards.findIndex((c) => c.id === overId);
+
+        if (cards[activeIndex].columnId !== cards[overIndex].columnId) {
+          cards[activeIndex].columnId = cards[overIndex].columnId;
+          return arrayMove(cards, activeIndex, overIndex -1); 
+        }
+
+        return arrayMove(cards, activeIndex, overIndex);
+      });
+    }
+
+    // Over a col
+    const isOverCol = over.data.current.type === "Column";
+
+    if(isDragCard && isOverCol) {
+      setCards((cards) => {
+        const activeIndex = cards.findIndex((c) => c.id === activeId); 
+
+        cards[activeIndex].columnId = overId;
+        console.log("DROPPING TASK OVER COLUMN", { activeIndex });
+
+        return arrayMove(cards, activeIndex, activeIndex); 
+      });
+    }
   };
 
   const sensors = useSensors(
@@ -148,6 +191,7 @@ const Board = () => {
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         sensors={sensors}
+        onDragOver={onDragOver}
       >
         <div className="m-auto flex gap-4">
           <div className="flex gap-4">
@@ -205,8 +249,9 @@ const Board = () => {
                 // updateCard={updateCard}
               />
             )}
-            {dragCard && <Card card={dragCard} 
-            handleDeleteCard={handleDeleteCard}/> }
+            {dragCard && (
+              <Card card={dragCard} handleDeleteCard={handleDeleteCard} />
+            )}
           </DragOverlay>,
           document.body
         )}

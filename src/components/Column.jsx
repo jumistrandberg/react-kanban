@@ -17,7 +17,7 @@ const Column = ({
 }) => {
   const [editColName, setEditColName] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
-  const cardIds = useMemo(() => {
+  const cardsIds = useMemo(() => {
     return cards.map((card) => card.id);
   }, [cards]);
 
@@ -90,7 +90,7 @@ const Column = ({
     rounded-md
     flex
     flex-col
-    overflow-y-auto scrollable-container
+    // overflow-y-auto scrollable-container
     "
     >
       <div className="column">
@@ -115,18 +115,7 @@ const Column = ({
         justify-between"
         >
           <div className="flex gap-2">
-            <div
-              className="
-            bg-columnBackgroundColor 
-            flex 
-            justify-center 
-            items-center 
-            px-2 
-            py-1 
-            rounded-full"
-            >
-              0
-            </div>
+     
             {!editColName && column.title}
             {editColName && (
               <input
@@ -157,7 +146,7 @@ const Column = ({
         </div>
         {/* Card container  */}
         <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden ">
-          <SortableContext items={cardIds}>
+          <SortableContext items={cardsIds}>
             {cards.map((card) => (
               <Card
                 key={card.id}
