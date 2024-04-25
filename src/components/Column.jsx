@@ -19,7 +19,7 @@ const Column = ({
   const [colTitle, setColTitle] = useState(column.title);
   const cardIds = useMemo(() => {
     return cards.map((card) => card.id);
-  }, [cards])
+  }, [cards]);
 
   const {
     setNodeRef,
@@ -90,6 +90,7 @@ const Column = ({
     rounded-md
     flex
     flex-col
+    overflow-y-auto scrollable-container
     "
     >
       <div className="column">
@@ -155,7 +156,7 @@ const Column = ({
           </button>
         </div>
         {/* Card container  */}
-        <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+        <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden ">
           <SortableContext items={cardIds}>
             {cards.map((card) => (
               <Card
@@ -166,13 +167,15 @@ const Column = ({
               />
             ))}
           </SortableContext>
+
+        
         </div>
       </div>
       <button
-        onClick={() => {
-          handleCreateCard(column.id);
-        }}
-        className="
+            onClick={() => {
+              handleCreateCard(column.id);
+            }}
+            className="
           hover:bg-mainBackgroundColor
           hover:border-mainBackgroundColor
           flex 
@@ -182,10 +185,11 @@ const Column = ({
           border-2 
           rounded-md 
           p-4"
-      >
-        Add Task
-      </button>
+          >
+            Add Task
+          </button>
     </div>
+    
   );
 };
 

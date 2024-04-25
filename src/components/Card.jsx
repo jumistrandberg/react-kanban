@@ -30,6 +30,30 @@ const Card = ({ card, handleDeleteCard }) => {
     setEditCard((prev) => !prev);
   };
 
+  if (isDragging) {
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="
+        opacity-50
+        flex
+      flex-col
+      text-left
+    bg-mainBackgroundColor
+      p-2
+      h-[100px]
+      min-h-[100px]
+      items-start
+      justify-between
+      rounded-md
+      border-2
+      border-purple-200
+      cursor-grab"
+      ></div>
+    );
+  }
+
   if (editCard) {
     return (
       <div

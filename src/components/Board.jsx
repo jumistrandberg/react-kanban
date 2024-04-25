@@ -19,6 +19,9 @@ const Board = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragColumn, setDragColumn] = useState(null);
+  const [dragCard, setDragCard] = useState(null);
+
+
 
   // Functional components
   const handleCreateColumn = () => {
@@ -94,6 +97,10 @@ const Board = () => {
   const onDragStart = (e) => {
     if (e.active.data.current.type === "Column") {
       setDragColumn(e.active.data.current.column);
+      return;
+    }
+    if (e.active.data.current.type === "Card") {
+      setDragCard(e.active.data.current.card);
       return;
     }
   };
@@ -198,6 +205,8 @@ const Board = () => {
                 // updateCard={updateCard}
               />
             )}
+            {dragCard && <Card card={dragCard} 
+            handleDeleteCard={handleDeleteCard}/> }
           </DragOverlay>,
           document.body
         )}
