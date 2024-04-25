@@ -1,8 +1,30 @@
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
 import { IoMdTrash } from "react-icons/io";
+import { CSS } from "@dnd-kit/utilities";
 
 const Card = ({ card, handleDeleteCard }) => {
   const [editCard, setEditCard] = useState(false);
+
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: card.id,
+    data: {
+      type: "card",
+      card,
+    },
+  });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
   const cardToggleEditMode = () => {
     setEditCard((prev) => !prev);
@@ -11,6 +33,10 @@ const Card = ({ card, handleDeleteCard }) => {
   if (editCard) {
     return (
       <div
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
         className="
       flex
       flex-col
@@ -42,11 +68,6 @@ const Card = ({ card, handleDeleteCard }) => {
           bg-transparent 
           text-mainTextColor 
           focus:outline-none"
-          // autoFocus
-          // placeholder="Hmm..."
-          // onBlur={cardToggleEditMode}
-          // onKeyDown={e => e.key === "Enter" && cardToggleEditMode()}
-          // onChange={(e) => updateCard(card.id, e.target.value)}
           ></textarea>
           <button
             onClick={() => {
@@ -64,6 +85,10 @@ const Card = ({ card, handleDeleteCard }) => {
 
   return (
     <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
       onClick={cardToggleEditMode}
       className="
         flex

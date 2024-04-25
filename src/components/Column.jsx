@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { IoMdTrash } from "react-icons/io";
 import { useParams, useSearchParams } from "react-router-dom";
 import Card from "./Card";
-import { useSortable } from "@dnd-kit/sortable";
+import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 const Column = ({
   column,
-  handleDeleteColumn,  
+  handleDeleteColumn,
   handleCardOpen,
   updateColumn,
   handleCreateCard,
@@ -17,6 +17,9 @@ const Column = ({
 }) => {
   const [editColName, setEditColName] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
+  const cardIds = useMemo(() => {
+    return cards.map((card) => card.id);
+  }, [cards])
 
   const {
     setNodeRef,
@@ -153,22 +156,23 @@ const Column = ({
         </div>
         {/* Card container  */}
         <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
-          {cards.map((card) => (
+          <SortableContext items={cardIds}>
+            {cards.map((card) => (
               <Card
-              key={card.id}
-              card={card}
-              handleDeleteCard={handleDeleteCard}
-              // updateCard={updateCard}
-            />
-          ))}
+                key={card.id}
+                card={card}
+                handleDeleteCard={handleDeleteCard}
+                // updateCard={updateCard}
+              />
+            ))}
+          </SortableContext>
         </div>
-      
       </div>
       <button
-          onClick={() => {
-            handleCreateCard(column.id);
-          }}
-          className="
+        onClick={() => {
+          handleCreateCard(column.id);
+        }}
+        className="
           hover:bg-mainBackgroundColor
           hover:border-mainBackgroundColor
           flex 
@@ -178,9 +182,9 @@ const Column = ({
           border-2 
           rounded-md 
           p-4"
-        >
-          Add Task
-        </button>
+      >
+        Add Task
+      </button>
     </div>
   );
 };
