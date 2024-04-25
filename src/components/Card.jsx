@@ -42,6 +42,11 @@ const Card = ({ card, handleDeleteCard }) => {
           bg-transparent 
           text-mainTextColor 
           focus:outline-none"
+          // autoFocus
+          // placeholder="Hmm..."
+          // onBlur={cardToggleEditMode}
+          // onKeyDown={e => e.key === "Enter" && cardToggleEditMode()}
+          // onChange={(e) => updateCard(card.id, e.target.value)}
           ></textarea>
           <button
             onClick={() => {
@@ -81,7 +86,6 @@ const Card = ({ card, handleDeleteCard }) => {
         <h3 className="font-bold">{card.title}</h3>
       </div>
       <div>
-        <p>{card.id}</p>
         <p>{card.date}</p>
       </div>
       <button

@@ -69,9 +69,18 @@ const Board = () => {
   };
 
   const handleDeleteCard = (id) => {
-    const newCards = cards.filter((card) => card.id !== id); 
+    const newCards = cards.filter((card) => card.id !== id);
     setCards(newCards);
   };
+
+  // const updateCard = (id) => {
+  //   const newCards = cards.map((card) => {
+  //     if (card.id !== id) return card;
+  //     return { ...card, id };
+  //   });
+
+  //   setCards(newCards);
+  // };
 
   const handleCardOpen = (card) => {
     setSelectedCard(card);
@@ -145,7 +154,7 @@ const Board = () => {
                   handleCreateCard={handleCreateCard}
                   cards={cards.filter((card) => card.columnId === col.id)}
                   handleDeleteCard={handleDeleteCard}
-
+                  // updateCard={updateCard}
                 />
               ))}
             </SortableContext>
@@ -186,6 +195,7 @@ const Board = () => {
                 handleCreateCard={handleCreateCard}
                 cards={cards.filter((card) => card.columnId === dragColumn.id)}
                 handleDeleteCard={handleDeleteCard}
+                // updateCard={updateCard}
               />
             )}
           </DragOverlay>,

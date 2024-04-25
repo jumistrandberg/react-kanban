@@ -13,6 +13,7 @@ const Column = ({
   handleCreateCard,
   handleDeleteCard,
   cards,
+  // updateCard
 }) => {
   const [editColName, setEditColName] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
