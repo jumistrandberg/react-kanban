@@ -1,9 +1,9 @@
 import { IoMdTrash } from "react-icons/io";
 
-const Card = ({ card, handleCardOpen }) => {
+const Card = ({ card, handleDeleteCard }) => {
   return (
     <div
-      onClick={() => handleCardOpen(card)}
+      // onClick={() => handleCardOpen(card)}
       className="
         flex
         flex-col
@@ -28,7 +28,9 @@ const Card = ({ card, handleCardOpen }) => {
         <p>{card.id}</p>
         <p>{card.date}</p>
       </div>
-      <button aria-label="trash icon" className="self-end hover:text-red-700">
+      <button onClick={() => {
+        handleDeleteCard(card.id);
+      }}aria-label="trash icon" className="self-end hover:text-red-700">
           <IoMdTrash />
         </button>
     </div>

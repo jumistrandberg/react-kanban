@@ -52,11 +52,10 @@ const Board = () => {
   };
 
   const handleCreateCard = (columnId) => {
-
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Adding 1 because January is 0
-    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Adding 1 because January is 0
+    const day = String(currentDate.getDate()).padStart(2, "0");
     const formattedDate = `${year}-${month}-${day}`;
 
     const newCard = {
@@ -67,6 +66,11 @@ const Board = () => {
     };
 
     setCards([...cards, newCard]);
+  };
+
+  const handleDeleteCard = (id) => {
+    const newCards = cards.filter((card) => card.id !== id); 
+    setCards(newCards);
   };
 
   const handleCardOpen = (card) => {
@@ -140,6 +144,8 @@ const Board = () => {
                   updateColumn={updateColumn}
                   handleCreateCard={handleCreateCard}
                   cards={cards.filter((card) => card.columnId === col.id)}
+                  handleDeleteCard={handleDeleteCard}
+
                 />
               ))}
             </SortableContext>

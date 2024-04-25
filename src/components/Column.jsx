@@ -7,10 +7,11 @@ import { CSS } from "@dnd-kit/utilities";
 
 const Column = ({
   column,
-  handleDeleteColumn,
-  handleCreateCard,
+  handleDeleteColumn,  
   handleCardOpen,
   updateColumn,
+  handleCreateCard,
+  handleDeleteCard,
   cards,
 }) => {
   const [editColName, setEditColName] = useState(false);
@@ -155,7 +156,7 @@ const Column = ({
               <Card
               key={card.id}
               card={card}
-              // handleDeleteCard={handleDeleteCard}
+              handleDeleteCard={handleDeleteCard}
               // updateCard={updateCard}
             />
           ))}
