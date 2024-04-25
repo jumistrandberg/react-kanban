@@ -184,6 +184,8 @@ const Board = () => {
                 handleDeleteColumn={handleDeleteColumn}
                 updateColumn={updateColumn}
                 handleCreateCard={handleCreateCard}
+                cards={cards.filter((card) => card.columnId === dragColumn.id)}
+                handleDeleteCard={handleDeleteCard}
               />
             )}
           </DragOverlay>,
