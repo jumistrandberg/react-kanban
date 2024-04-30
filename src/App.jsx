@@ -1,16 +1,17 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import "./App.css";
 import Board from "./components/Board";
+import FullCol from "./components/FullCol";
 
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" component={Board} />
+      <Routes>
+        <Route path="/" component={Board} />
         <Route path="/column/:id" component={FullCol} />
-
-      </Switch>
+      </Routes>
     </Router>
   );
 };
