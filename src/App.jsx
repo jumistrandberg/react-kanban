@@ -1,18 +1,18 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 
 import "./App.css";
 import Board from "./components/Board";
 import FullCol from "./components/FullCol";
+import Card from "./components/Card";
 
 const App = () => {
   return (
-    <Router>
       <Routes>
-        <Route path="/" component={Board} />
-        <Route path="/column/:id" component={FullCol} />
+        <Route path="/" element={<Board/>} />
+        <Route path="/column/:id" element={<FullCol/>} />
+        <Route path="card/:id" element={<Card/>} />
       </Routes>
-    </Router>
   );
 };
 
