@@ -1,7 +1,7 @@
 import React, {useState, useEffect, createContext} from 'react'
-import { json } from 'react-router-dom';
 
 export const DataContext = createContext({}); 
+
 export const DataProvider = ({children}) => {
     const [cards, setCards] = useState(() => {
         const storedCards = localStorage.getItem("cards"); 

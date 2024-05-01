@@ -1,18 +1,21 @@
 import React from "react";
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import Board from "./components/Board";
-import FullCol from "./components/FullCol";
+import FullColPage from "./pages/FullColPage";
 import Card from "./components/Card";
+import { DataProvider } from "./components/DataContext";
 
 const App = () => {
   return (
+    <DataProvider>
       <Routes>
-        <Route path="/" element={<Board/>} />
-        <Route path="/column/:id" element={<FullCol/>} />
-        <Route path="card/:id" element={<Card/>} />
+        <Route path="/" element={<Board />} />
+        <Route path="/column/:id" element={<FullColPage />} />
+        <Route path="/card/:id" element={<Card />} />
       </Routes>
+    </DataProvider>
   );
 };
 
