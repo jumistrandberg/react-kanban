@@ -17,8 +17,8 @@ const Board = () => {
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [selectedCard, setSelectedCard] = useState(null);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragColumn, setDragColumn] = useState(null);
   const [dragCard, setDragCard] = useState(null);
 

@@ -7,14 +7,14 @@ const FullColPage = () => {
   const { id } = useParams();
   const { cards } = useContext(DataContext);
 
-  const filteredCards = cards.filter((card) => card.belongsTo === columnId);
+  const filteredCards = cards.filter((card) => card.column.id === id);
 
   return (
     <div>
       {id && (
         <>
           {filteredCards.map((card) => (
-            <Card key={task.id} task={task} />
+            <Card key={card.id} card={card} />
           ))}
         </>
       )}

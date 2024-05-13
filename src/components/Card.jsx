@@ -1,10 +1,32 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { IoMdTrash } from "react-icons/io";
+import { CgArrowsExpandLeft } from "react-icons/cg";
 import { CSS } from "@dnd-kit/utilities";
+import Modal from "./Modal";
+import DataContext from "./DataContext";
+import { Link } from "react-router-dom";
 
-const Card = ({ card, handleDeleteCard }) => {
+const Card = ({ card }) => {
+  const { setCards } = useContext(DataContext);
   const [editCard, setEditCard] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const toggleModal = () => {
+    setOpenModal(!openModal);
+  };
+
+  const handleSaveModal = (id, modalTitle, modalContent) => {
+    setCards((prevCards) => {
+      const updatedCards = prevCards.map((c) => {
+        if (c.id === id) {
+          return { ...c, title: modalTitle, content: modalContent };
+        }
+        return c;
+      });
+      return updatedCards;
+    });
+  };
 
   const {
     setNodeRef,
@@ -27,7 +49,7 @@ const Card = ({ card, handleDeleteCard }) => {
   };
 
   const cardToggleEditMode = () => {
-    setEditCard((prev) => !prev);
+    setEditCard(!editCard);
   };
 
   if (isDragging) {
@@ -53,7 +75,7 @@ const Card = ({ card, handleDeleteCard }) => {
       ></div>
     );
   }
-
+  // In edit mode return
   if (editCard) {
     return (
       <div
@@ -78,9 +100,31 @@ const Card = ({ card, handleDeleteCard }) => {
       cursor-grab
       "
       >
-        <div className="flex flex-row items-center gap-6">
-          <p className="text-xs">{card.date}</p>
+        <div className="relative w-full">
+          <div className="flex flex-row items-center justify-between">
+            <Link to={`/card/${card.id}`}>
+              <h2>{card.title}</h2>
+            </Link>
+
+            <p className="text-xs">{card.date}</p>
+            <button
+              onClick={toggleModal}
+              className="bg-columnBackgroundColor p-1 rounded-full"
+            >
+              <CgArrowsExpandLeft className="card-expand-btn" />
+            </button>
+            {openModal && (
+              <Modal
+                title={card.title}
+                content={card.date}
+                id={card.id}
+                onClose={toggleModal}
+                handleDeleteCard={() => handleDeleteCard(card.id)}
+              />
+            )}
+          </div>
         </div>
+
         <div className="flex w-[100%]">
           <textarea
             className="
@@ -106,6 +150,7 @@ const Card = ({ card, handleDeleteCard }) => {
     );
   }
 
+  // Outside edit mode return
   return (
     <div
       ref={setNodeRef}
@@ -130,9 +175,30 @@ const Card = ({ card, handleDeleteCard }) => {
         cursor-grab
         "
     >
-      <div className="flex flex-row">
-        <h3 className="font-bold">{card.title}</h3>
+      <div className="w-full">
+        <div className="flex flex-row justify-between w-full">
+          <Link to={`/Card/${card.id}`}>
+            <h3 className="font-bold">{card.title}</h3>
+          </Link>
+
+          <button
+            onClick={toggleModal}
+            className="bg-columnBackgroundColor p-1 rounded-full"
+          >
+            <CgArrowsExpandLeft className="card-expand-btn" />
+          </button>
+          {openModal && (
+            <Modal
+              title={card.title}
+              content={card.date}
+              id={card.id}
+              onClose={toggleModal}
+              handleDeleteCard={() => handleDeleteCard(card.id)}
+            />
+          )}
+        </div>
       </div>
+
       <div>
         <p>{card.date}</p>
       </div>
