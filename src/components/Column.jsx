@@ -111,13 +111,12 @@ const Column = ({
         <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden ">
           <SortableContext items={cardsIds}>
             {cards.map((card) => (
-              // <div key={card.id} onClick={() => navigateToCard(card.id)}>
                 <Card
                   key={card.id}
                   card={card}
                   handleDeleteCard={handleDeleteCard}
                 />
-              // </div>
+              
             ))}
           </SortableContext>
         </div>

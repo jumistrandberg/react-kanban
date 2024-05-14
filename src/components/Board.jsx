@@ -84,15 +84,6 @@ const Board = () => {
   };
 
 
-  // const handleCardOpen = (card) => {
-  //   setSelectedCard(card);
-  //   setIsModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  // };
-
   const onDragStart = (e) => {
     if (e.active.data.current.type === "Column") {
       setDragColumn(e.active.data.current.column);
@@ -205,7 +196,6 @@ const Board = () => {
                   handleCreateCard={handleCreateCard}
                   cards={cards.filter((card) => card.columnId === col.id)}
                   handleDeleteCard={handleDeleteCard}
-                  // updateCard={updateCard}
                 />
               ))}
             </SortableContext>
@@ -246,7 +236,6 @@ const Board = () => {
                 handleCreateCard={handleCreateCard}
                 cards={cards.filter((card) => card.columnId === dragColumn.id)}
                 handleDeleteCard={handleDeleteCard}
-                // updateCard={updateCard}
               />
             )}
             {dragCard && (
