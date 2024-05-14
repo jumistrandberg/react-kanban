@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IoMdClose } from "react-icons/io";
 
 const Modal = ({
   title,
+  id,
   content,
   onClose,
+  cardText,
   handleDeleteCard,
-  handleSaveModal
+  handleSaveModal, 
+  textareaContents,
+  setTextareaContents,
+  handleTextareaChange
 }) => {
   const [modalTitle, setModalTitle] = useState(title);
-  const [modalContent, setModalContent] = useState(content);
+  const [modalContent, setModalContent] = useState(textareaContents[id] || ""); 
   const [isEdit, setIsEdit] = useState(false);
-  
 
   const handleEditTitle = (e) => {
     setModalTitle(e.target.value);
@@ -22,7 +26,9 @@ const Modal = ({
   };
 
   const handleUpdate = () => {
-    handleSaveModal(title, modalTitle, modalContent);
+    handleSaveModal(id, modalTitle, modalContent);
+    handleTextareaChange({id, content: modalContent})
+    setTextareaContents({ ...textareaContents, [title]: modalContent }); 
     setIsEdit(false);
   };
 
@@ -41,8 +47,8 @@ const Modal = ({
           <>
             <input type="text" value={modalTitle} onChange={handleEditTitle} />
             <textarea
-              value={modalContent}
-              onChange={handleModalEdit}
+              value={cardText}
+              onChange={handleTextareaChange}
             ></textarea>
           </>
         ) : (

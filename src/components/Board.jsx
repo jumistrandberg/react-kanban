@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useContext } from "react";
 import { IoIosAddCircle } from "react-icons/io";
 import Column from "./Column";
 import Card from "./Card";
@@ -11,22 +11,27 @@ import {
 } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
+import { DataContext } from "./DataContext";
 
 const Board = () => {
+  const { cards, setCards, columns, setColumns, textareaContents, setTextareaContents, generateId } = useContext(DataContext);
+
   // Use States
-  const [columns, setColumns] = useState([]);
-  const [cards, setCards] = useState([]);
+  // const [columns, setColumns] = useState([]);
+  // const [cards, setCards] = useState([]);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
   // const [selectedCard, setSelectedCard] = useState(null);
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragColumn, setDragColumn] = useState(null);
   const [dragCard, setDragCard] = useState(null);
 
+  
+
   // Functional components
   const handleCreateColumn = () => {
     setColumns((prevColumns) => {
       const columnAdd = {
-        id: generateColId(),
+        id: generateId(),
         title: `Column ${prevColumns.length + 1}`,
         cards: [],
       };
@@ -34,9 +39,6 @@ const Board = () => {
     });
   };
 
-  const generateColId = () => {
-    return Math.floor(Math.random() * 3000);
-  };
 
   const handleDeleteColumn = (id) => {
     setColumns((prevColumns) => {
@@ -61,7 +63,7 @@ const Board = () => {
     const formattedDate = `${year}-${month}-${day}`;
 
     const newCard = {
-      id: cards.length + 1,
+      id: generateId(),
       columnId,
       title: `Task ${cards.length + 1}`,
       date: formattedDate,
@@ -71,8 +73,14 @@ const Board = () => {
   };
 
   const handleDeleteCard = (id) => {
-    const newCards = cards.filter((card) => card.id !== id);
-    setCards(newCards);
+    setCards(cards.filter((c) => c.id !== id));
+  };
+
+  const handleTextareaChange = (cardId, newText) => {
+    setTextareaContents((prevTextareaContents) => ({
+      ...prevTextareaContents,
+      [cardId]: newText,
+    }));
   };
 
   // const updateCard = (id) => {
@@ -146,7 +154,7 @@ const Board = () => {
 
         if (cards[activeIndex].columnId !== cards[overIndex].columnId) {
           cards[activeIndex].columnId = cards[overIndex].columnId;
-          return arrayMove(cards, activeIndex, overIndex -1); 
+          return arrayMove(cards, activeIndex, overIndex - 1);
         }
 
         return arrayMove(cards, activeIndex, overIndex);
@@ -156,14 +164,14 @@ const Board = () => {
     // Over a col
     const isOverCol = over.data.current.type === "Column";
 
-    if(isDragCard && isOverCol) {
+    if (isDragCard && isOverCol) {
       setCards((cards) => {
-        const activeIndex = cards.findIndex((c) => c.id === activeId); 
+        const activeIndex = cards.findIndex((c) => c.id === activeId);
 
         cards[activeIndex].columnId = overId;
         console.log("DROPPING TASK OVER COLUMN", { activeIndex });
 
-        return arrayMove(cards, activeIndex, activeIndex); 
+        return arrayMove(cards, activeIndex, activeIndex);
       });
     }
   };
@@ -250,7 +258,13 @@ const Board = () => {
               />
             )}
             {dragCard && (
-              <Card card={dragCard} handleDeleteCard={handleDeleteCard} />
+              <Card
+                card={dragCard}
+                handleDeleteCard={handleDeleteCard}
+                textareaContents={textareaContents}
+                setTextareaContents={setTextareaContents}
+                handleTextareaChange={handleTextareaChange}
+              />
             )}
           </DragOverlay>,
           document.body

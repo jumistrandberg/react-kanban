@@ -14,11 +14,11 @@ const Column = ({
   handleDeleteCard,
   cards,
   updateColumn,
+
 }) => {
   const [editColName, setEditColName] = useState(false);
   const [colTitle, setColTitle] = useState(column.title);
   const cardsIds = useMemo(() => cards.map((card) => card.id), [cards]);
-  const navigate = useNavigate();
 
   const {
     setNodeRef,
@@ -56,7 +56,6 @@ const Column = ({
     setEditColName(false);
   };
 
-  const { navToCard } = useContext(DataContext);
 
   if (isDragging) {
     return (
@@ -74,7 +73,7 @@ const Column = ({
       style={style}
       className="bg-columnBackgroundColor w-[350px] h-[500px] max-h-[500px] rounded-md flex flex-col"
     >
-      <div className="column">
+      <div className="column overflow-auto">
         {/* Column Title  */}
         <div
           {...attributes}
@@ -127,6 +126,7 @@ const Column = ({
       >
         Add Task
       </button>
+      
     </div>
   );
 };

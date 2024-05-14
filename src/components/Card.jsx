@@ -7,13 +7,26 @@ import Modal from "./Modal";
 import DataContext from "./DataContext";
 import { Link } from "react-router-dom";
 
-const Card = ({ card }) => {
-  const { setCards } = useContext(DataContext);
+const Card = ({ card, handleDeleteCard }) => {
+  const { cards, setCards, textareaContents, setTextareaContents } =
+    useContext(DataContext);
   const [editCard, setEditCard] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [cardText, setCardText] = useState(textareaContents[card.id] || "");
+  const hasLocalStorageContent = textareaContents[card.id] !== undefined;
+
 
   const toggleModal = () => {
+    // setTextareaContents({ ...textareaContents, [card.id]: cardText });
     setOpenModal(!openModal);
+  };
+
+  const handleTextareaChange = (event) => {
+    setCardText(event.target.value);
+    setTextareaContents({
+      ...textareaContents,
+      [card.id]: event.target.value,
+    });
   };
 
   const handleSaveModal = (id, modalTitle, modalContent) => {
@@ -23,11 +36,20 @@ const Card = ({ card }) => {
           return { ...c, title: modalTitle, content: modalContent };
         }
         return c;
+        
       });
       return updatedCards;
     });
+    setTextareaContents({ ...textareaContents, [id]: modalContent });
   };
 
+  const handleCloseModal = () => {
+    if (cardText !== textareaContents[card.id]) {
+      setTextareaContents({ ...textareaContents, [card.id]: cardText });
+    }
+    setOpenModal(false);
+  };
+  
   const {
     setNodeRef,
     attributes,
@@ -76,7 +98,7 @@ const Card = ({ card }) => {
     );
   }
   // In edit mode return
-  if (editCard) {
+  if (editCard || hasLocalStorageContent) {
     return (
       <div
         ref={setNodeRef}
@@ -119,23 +141,30 @@ const Card = ({ card }) => {
                 content={card.date}
                 id={card.id}
                 onClose={toggleModal}
+                handleCloseModal={handleCloseModal}
                 handleDeleteCard={() => handleDeleteCard(card.id)}
+                handleSaveModal={handleSaveModal}
+                handleTextareaChange={handleTextareaChange}
+                textareaContents={textareaContents}
+                setTextareaContents={setTextareaContents}
               />
             )}
           </div>
         </div>
 
         <div className="flex w-[100%]">
-          <textarea
-            className="
-          h-[100%]
-          w-[100%]
-          resize-none 
-          border-none
-          bg-transparent 
-          text-mainTextColor 
-          focus:outline-none"
-          ></textarea>
+          {editCard ? (
+            <textarea
+              value={cardText}
+              onChange={handleTextareaChange}
+              className="h-[100%] w-[100%] resize-none border-none bg-transparent text-mainTextColor focus:outline-none"
+            />
+          ) : (
+            <textarea
+            value={cardText}
+            onChange={handleTextareaChange}
+            className="h-[100%] w-[100%] resize-none border-none bg-transparent text-mainTextColor focus:outline-none"
+          />          )}
           <button
             onClick={() => {
               handleDeleteCard(card.id);
@@ -193,7 +222,13 @@ const Card = ({ card }) => {
               content={card.date}
               id={card.id}
               onClose={toggleModal}
+              handleCloseModal={handleCloseModal}
               handleDeleteCard={() => handleDeleteCard(card.id)}
+              handleSaveModal={handleSaveModal}
+              handleTextareaChange={handleTextareaChange}
+              textareaContents={textareaContents}
+              setTextareaContents={setTextareaContents}
+
             />
           )}
         </div>
