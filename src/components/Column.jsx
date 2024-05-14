@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useContext } from "react";
 import { IoMdTrash } from "react-icons/io";
 import { CgArrowsExpandLeft } from "react-icons/cg";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { DataContext } from "./DataContext";
@@ -81,9 +81,11 @@ const Column = ({
           onClick={() => setEditColName(true)}
           className="bg-mainBackgroundColor text-md cursor-grab rounded-md p-3 font-bold border-columnBackgroundColor border-3 flex items-center justify-between"
         >
-          <button className="bg-columnBackgroundColor p-2 rounded-full items-center justify-center">
+            <Link to={`/column/${column.id}`}>
+            <button className="bg-columnBackgroundColor p-2 rounded-full items-center justify-center">
             <CgArrowsExpandLeft />
-          </button>
+          </button>            </Link>
+    
           <div className="flex gap-2">
             {!editColName && column.title}
             {editColName && (

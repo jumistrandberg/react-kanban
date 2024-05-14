@@ -20,10 +20,20 @@ export const DataProvider = ({ children }) => {
     return storedTextareaContents ? JSON.parse(storedTextareaContents) : {};
   });
 
-
-
-  const navigate = useNavigate();
-
+  useEffect(() => {
+    if (columns.length > 0 && cards.length > 0) {
+      setColumns((prevColumns) =>
+        prevColumns.map((column) => {
+          // Filter cards belonging to the current column
+          const columnCards = cards.filter(
+            (card) => card.columnId === column.id
+          );
+          // Update the column with the filtered cards
+          return { ...column, cards: columnCards };
+        })
+      );
+    }
+  }, [cards]); // Removed 'columns' from the dependency array
 
   useEffect(() => {
     localStorage.setItem("cards", JSON.stringify(cards));
@@ -31,7 +41,7 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("columns", JSON.stringify(columns));
-  }, [columns]);
+  }, [columns, cards]);
 
   useEffect(() => {
     if (!localStorage.getItem("cards")) {

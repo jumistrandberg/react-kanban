@@ -5,7 +5,6 @@ import { DataContext } from "../components/DataContext";
 const CardPage = () => {
   const { id } = useParams();
   const { cards } = useContext(DataContext);
-
   // Find the task with the matching id
   const card = cards.find((c) => c.id === parseInt(id));
 
@@ -15,10 +14,12 @@ const CardPage = () => {
 
   return (
     <main>
-      <h2 className="task-title">{card.title}</h2>
-      <p className="task-content">{card.date}</p>
+      <h2 className="card-title">{card.title}</h2>
+      <p className="card-date">{card.date}</p>
     </main>
   );
 };
+
+
 
 export default CardPage;
