@@ -14,18 +14,19 @@ import { createPortal } from "react-dom";
 import { DataContext } from "./DataContext";
 
 const Board = () => {
-  const { cards, setCards, columns, setColumns, textareaContents, setTextareaContents, generateId } = useContext(DataContext);
+  const {
+    cards,
+    setCards,
+    columns,
+    setColumns,
+    textareaContents,
+    setTextareaContents,
+    generateId,
+  } = useContext(DataContext);
 
-  // Use States
-  // const [columns, setColumns] = useState([]);
-  // const [cards, setCards] = useState([]);
   const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
-  // const [selectedCard, setSelectedCard] = useState(null);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [dragColumn, setDragColumn] = useState(null);
   const [dragCard, setDragCard] = useState(null);
-
-  
 
   // Functional components
   const handleCreateColumn = () => {
@@ -38,7 +39,6 @@ const Board = () => {
       return [...prevColumns, columnAdd];
     });
   };
-
 
   const handleDeleteColumn = (id) => {
     setColumns((prevColumns) => {
@@ -83,23 +83,15 @@ const Board = () => {
     }));
   };
 
-  // const updateCard = (id) => {
-  //   const newCards = cards.map((card) => {
-  //     if (card.id !== id) return card;
-  //     return { ...card, id };
-  //   });
 
-  //   setCards(newCards);
+  // const handleCardOpen = (card) => {
+  //   setSelectedCard(card);
+  //   setIsModalOpen(true);
   // };
 
-  const handleCardOpen = (card) => {
-    setSelectedCard(card);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   const onDragStart = (e) => {
     if (e.active.data.current.type === "Column") {
