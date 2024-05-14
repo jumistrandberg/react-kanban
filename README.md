@@ -1,5 +1,5 @@
 # KanBan Style React App
-
+Issues are made in the GitHub repo for this project. 
 
 ## Description:
 The project was created for Chas fjsx23 class.
@@ -43,7 +43,7 @@ To deploy website locally:
 
 
 You may also view the website via Netlify:
-
+https://jumis-kanban.netlify.app
 
 
 
