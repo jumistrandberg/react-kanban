@@ -46,6 +46,7 @@ const Modal = ({
         ) : (
           <>
             <div>{title}</div>
+            <div>{modalContent}</div>
             <div>{content}</div>
           </>
         )}
